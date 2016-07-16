@@ -1,6 +1,7 @@
 package ml.alohomora.mmdms;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -82,10 +83,15 @@ public class Section4Fragment extends Fragment {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String haemo = et1.getText().toString();
+                String haemoglobin = et1.getText().toString();
                 String wbc = et2.getText().toString();
 
-               Toast.makeText(getContext(),"You entered "+haemo+" and "+wbc+".",Toast.LENGTH_SHORT).show();
+               final SQLiteDatabase DB = SQLiteDatabase.openDatabase("PatInfo",null,getActivity().MODE_PRIVATE);
+                DB.execSQL("insert into PatInfo values(?,?)");
+
+                DB.execSQL("INSERT into PatInfo values(\"" + haemoglobin + "\"," + wbc+"\");");
+
+               Toast.makeText(getContext(),"You entered "+haemoglobin+" and "+wbc+".",Toast.LENGTH_SHORT).show();
 
             }
         });
