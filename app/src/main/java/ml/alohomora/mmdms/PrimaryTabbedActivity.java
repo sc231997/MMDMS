@@ -119,31 +119,31 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
             switch (position)
             {
                 case 0:
-                    return new Section1Fragment();
+                    //return new Section1Fragment();
                 case 1:
-                    return new Section2Fragment();
+                    //return new Section2Fragment();
                 case 2:
                     return new Section3Fragment();
                 case 3:
-                    return new Section4Fragment();
+                   // return new Section4Fragment();
                 case 4:
-                    return new Section5Fragment();
+                   // return new Section5Fragment();
                 case 5:
-                    return new Section6Fragment();
+                   // return new Section6Fragment();
                 case 6:
-                    return new Section7Fragment();
+                    //return new Section7Fragment();
                 case 7:
-                    return new Section8Fragment();
+                    //return new Section8Fragment();
                 case 8:
-                    return new Section9Fragment();
+                    //return new Section9Fragment();
                 case 9:
-                    return new Section10Fragment();
+                    //return new Section10Fragment();
                 case 10:
-                    return new Section11Fragment();
+                    //return new Section11Fragment();
                 case 11:
-                    return new Section12Fragment();
+                    //return new Section12Fragment();
                 case 12:
-                    return new Section13Fragment();
+                   //return new Section13Fragment();
             }
             return PlaceholderFragment.newInstance(position + 1);
         }
