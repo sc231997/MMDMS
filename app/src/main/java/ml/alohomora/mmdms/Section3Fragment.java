@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,7 @@ import android.widget.TextView;
  * Activities that contain this fragment must implement the
  * {@link Section3Fragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Section3Fragment#newInstance} factory method to
+ * Use the {@link Sectiofactory method to
  * create an instance of this fragment.
  */
 public class Section3Fragment extends Fragment {
@@ -31,38 +33,13 @@ public class Section3Fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    EditText et;
     private OnFragmentInteractionListener mListener;
 
     public Section3Fragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Section3Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Section3Fragment newInstance(String param1, String param2) {
-        Section3Fragment fragment = new Section3Fragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
 
 
@@ -72,11 +49,6 @@ public class Section3Fragment extends Fragment {
 
 
 
-
-
-
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,14 +56,26 @@ public class Section3Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_section3, container, false);
         spin(view);
+        et = (EditText) view.findViewById(R.id.BGhighlight);
+        et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                highlight();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }}
 
         public void spin(View view) {
         Spinner dropdown = (Spinner) view.findViewById(R.id.spinner);
@@ -105,14 +89,20 @@ public class Section3Fragment extends Fragment {
          { String s;
         int llimit=100;
         int ulimit=500;
-        EditText et= (EditText) getActivity().findViewById(R.id.BGhighlight);
-        if(et.getText().toString()!=null)
+             et.setTextColor(Color.BLACK);
+        if(et.getText().toString().length() > 1)
         {
             String e=et.getText().toString();
-            int value = Integer.parseInt(e);
-            if(value>ulimit||value<llimit)
-            {
-                et.setTextColor(Color.RED);
+            if (e.length() > 1) {
+                int value = Integer.parseInt(e);
+                if(value>ulimit||value<llimit)
+                {
+                    et.setTextColor(Color.RED);
+                }
+                else
+                {
+                    et.setTextColor(Color.BLACK);
+                }
             }
         }
          }
@@ -120,24 +110,6 @@ public class Section3Fragment extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
     @Override
     public void onDetach() {
