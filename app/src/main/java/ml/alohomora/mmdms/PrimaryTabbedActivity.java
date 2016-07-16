@@ -118,15 +118,15 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position)
             {
-                case 0:
+                /*case 0:
                     return new Section1Fragment();
                 case 1:
                     return new Section2Fragment();
                 case 2:
-                    return new Section3Fragment();
+                    return new Section3Fragment()*;*/
                 case 3:
                     return new Section4Fragment();
-                case 4:
+                /*case 4:
                     return new Section5Fragment();
                 case 5:
                     return new Section6Fragment();
@@ -143,7 +143,7 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
                 case 11:
                     return new Section12Fragment();
                 case 12:
-                    return new Section13Fragment();
+                    return new Section13Fragment();*/
             }
             return PlaceholderFragment.newInstance(position + 1);
         }
