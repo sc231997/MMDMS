@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Sort by : "
+        android:id="@+id/textView"
+        android:textSize="23sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroupSort">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:id="@+id/radioButtonSortName"
+            android:checked="true"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Age"
+            android:id="@+id/radioSortButtonAge"
+            android:checked="false"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Glucose Level"
+            android:id="@+id/radioButtonSortGlucoseLevel"
+            android:checked="false"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BMI"
+            android:id="@+id/radioButtonSortBMI"
+            android:checked="false"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight"
+            android:id="@+id/radioButtonSortWeight"
+            android:checked="false"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Height"
+            android:id="@+id/radioButtonSortHeight"
+            android:checked="false"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Haemoglobin"
+            android:id="@+id/radioButtonSortHaemoglobin"
+            android:checked="false"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WBC Count"
+            android:id="@+id/radioButtonSortWBC"
+            android:checked="false"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
+    </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/buttonSortOk"
+        android:layout_gravity="center_horizontal"
+        android:textSize="25sp" />
+</LinearLayout>
