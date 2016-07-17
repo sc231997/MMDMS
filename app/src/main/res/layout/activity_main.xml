@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    tools:context="ml.alohomora.mmdms.MainActivity"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/viewA"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    tools:context="ml.alohomora.mmdms.MainActivity"
     android:paddingTop="10dp"
     android:orientation="vertical">
 
@@ -26,7 +31,7 @@
             android:layout_height="match_parent"
             android:id="@+id/imageButtonSortedSearch"
             android:layout_gravity="right"
-            android:layout_weight="7"
+            android:layout_weight="8"
             android:background="@drawable/sort_icon" />
     </LinearLayout>
 
@@ -43,3 +48,13 @@
         android:id="@+id/listViewPrimary" />
 
 </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/add_patient"
+        app:layout_anchor="@id/viewA"
+        app:layout_anchorGravity="bottom|right|end"/>
+</android.support.design.widget.CoordinatorLayout>

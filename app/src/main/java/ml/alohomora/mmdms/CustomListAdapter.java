@@ -9,25 +9,28 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ankush on 7/16/2016.
  */
 public class CustomListAdapter extends BaseAdapter {
     Context context;
-    String[] name,lastVisit,contact;
+    ArrayList<String> name,contact;
+    ArrayList<Integer> visitNo;
     private static LayoutInflater inflater=null;
 
-    public CustomListAdapter(MainActivity mainActivity, String[] name,String[] lastVisit,String[] contact)
+    public CustomListAdapter(MainActivity mainActivity, ArrayList<String> name, ArrayList<Integer> lastVisit, ArrayList<String> contact)
     {
         context = mainActivity;
         this.name = name;
-        this.lastVisit = lastVisit;
+        this.visitNo = lastVisit;
         this.contact = contact;
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount() {
-        return name.length;
+        return name.size();
     }
 
     @Override
@@ -43,13 +46,13 @@ public class CustomListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View listItem = inflater.inflate(R.layout.search_list_view_layout,null,true);
-        TextView textViewName,textViewContact,textViewLastVisit;
+        TextView textViewName,textViewContact,textViewVisitNo;
         textViewName = (TextView) listItem.findViewById(R.id.listTextViewName);
         textViewContact = (TextView)listItem.findViewById(R.id.listTextViewContact);
-        textViewLastVisit = (TextView)listItem.findViewById(R.id.listTextViewLastVisit);
-        textViewName.setText(name[i]);
-        textViewLastVisit.setText(lastVisit[i]);
-        textViewContact.setText(contact[i]);
+        textViewVisitNo = (TextView)listItem.findViewById(R.id.listTextViewVisitNo);
+        textViewName.setText(name.get(i));
+        textViewVisitNo.setText(visitNo.get(i));
+        textViewContact.setText(contact.get(i));
         return listItem;
     }
 }

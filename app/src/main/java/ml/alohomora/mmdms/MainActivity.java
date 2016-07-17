@@ -2,6 +2,7 @@ package ml.alohomora.mmdms;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -15,12 +16,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     String searchType = "Generic";
     ListView listView;
     ArrayList<String> name,contact,lastVisit;
+    ArrayList<Integer> eid,pid,visitNo;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    FloatingActionButton floatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
     void initialise()
     {
         sqLiteDatabase = SQLiteDatabase.openDatabase("PatInfo",null,MODE_PRIVATE);
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS PatInfo (pid INT,eid INT, name VARCHAR(100),contactNumber VARCHAR(100),age INT,gender VARCHAR(10),bloodGroup VARCHAR(5),"+"" +
+                "glucoseLevel FLOAT,respiratoryProblem VARCHAR(2), cardiacProblem VARCHAR(2),bmi FLOAT,weight FLOAT,height FLOAT,haemoglobin FLOAT,wbc LONG,balance FLOAT, amount FLOAT)");
         listView = (ListView)findViewById(R.id.listViewPrimary);
         editText = (EditText) findViewById(R.id.editTextSearch);
         imageButton = (ImageButton)findViewById(R.id.imageButtonSortedSearch);
@@ -99,6 +108,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showDialogAndGetSort();
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                resultClicked(i);
+            }
+        });
+        sharedPreferences = getSharedPreferences("mmdmsPreferences",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        floatingActionButton = (FloatingActionButton)findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insertNewPatient();
             }
         });
     }
@@ -115,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 case "Generic":
                     cursor = sqLiteDatabase.rawQuery("SELECT * from PatInfo WHERE name LIKE '%" + queryString + "%' OR " +
-                            "contactNumber LIKE '%" + queryString + "%';",null);
+                            "contactNumber LIKE '%" + queryString + "%' LIMIT 1;",null);
                     break;
                 case "BMI":
                     cursor = sqLiteDatabase.rawQuery("SELECT * from PatInfo ORDER BY bmi",null);
@@ -143,10 +167,15 @@ public class MainActivity extends AppCompatActivity {
             cursor.moveToFirst();
             while (cursor.isAfterLast() == false)
             {
+                pid.add(cursor.getInt(0));
+                eid.add(cursor.getInt(1));
                 name.add(cursor.getString(2));
                 contact.add(cursor.getString(3));
+                visitNo.add(cursor.getInt(1) % cursor.getInt(0));
 
             }
+            CustomListAdapter customListAdapter = new CustomListAdapter(MainActivity.this,name,visitNo,contact);
+            listView.setAdapter(customListAdapter);
 
         }
     }
@@ -193,5 +222,79 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+    }
+    void resultClicked(final int position)
+    {
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.dialog_show_result);
+        Button buttonNewEvent,buttonOk;
+        TextView textViewName,textViewFullResult;
+        buttonNewEvent = (Button)dialog.findViewById(R.id.buttonNewEvent);
+
+        buttonOk = (Button)dialog.findViewById(R.id.buttonResultOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        textViewName = (TextView)dialog.findViewById(R.id.textViewResultName);
+        textViewFullResult = (TextView)dialog.findViewById(R.id.textViewResultDisplay);
+        cursor.close();
+        cursor = sqLiteDatabase.rawQuery("SELECT * from PatInfo WHERE pid = " + pid.get(position),null);
+        cursor.moveToFirst();
+        textViewName.setText(cursor.getString(2));
+        while (cursor.isAfterLast() == false)
+        {
+            textViewFullResult.append("Visit no : " + cursor.getInt(1) % cursor.getInt(0) + "\n");
+            textViewFullResult.append("Glucose : " + cursor.getFloat(7) + "mg/dl" + "\n");
+            textViewFullResult.append("Respiratory problem : " + cursor.getString(8) + "\n");
+            textViewFullResult.append("Cardiac problem :" + cursor.getString(9) + "\n");
+            textViewFullResult.append("BMI : " + cursor.getFloat(10) + "\n");
+            textViewFullResult.append("Weight : " + cursor.getFloat(11) + "\n");
+            textViewFullResult.append("Haemoglobin : " + cursor.getFloat(13) + "\n");
+            textViewFullResult.append("WBC Count : " + cursor.getLong(14) + "\n");
+        }
+        buttonNewEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createNewEvent(pid.get(position),position);
+            }
+        });
+
+
+    }
+
+    void createNewEvent(int pid,int position)
+    {
+        int maxEid,age;
+        String name,contactNo,gender;
+        cursor.close();
+        cursor = sqLiteDatabase.rawQuery("SELECT MAX(eid),name,age,gender,contactNumber from PatInfo where pid = " + pid,null);
+        cursor.moveToFirst();
+        maxEid = cursor.getInt(0);
+        name = cursor.getString(1);
+        contactNo = cursor.getString(4);
+        gender  = cursor.getString(3);
+        age = cursor.getInt(2);
+        maxEid++;
+        sqLiteDatabase.execSQL("INSERT INTO PatInfo (eid,name,contactNumber,age,gender) VALUES (" + maxEid +
+                ", \"" + name + "\",\"" + contactNo +"\"," + age + ",\"" + gender + "\")");
+        editor.putInt("currentEid",maxEid);
+        editor.commit();
+        Intent intent = new Intent(MainActivity.this,PrimaryTabbedActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    void insertNewPatient()
+    {
+        int newPid = sharedPreferences.getInt("maxPid",1000);
+        editor.putInt("maxPid",newPid + 200);
+        editor.putInt("currentEid",newPid + 1);
+        editor.commit();
+        Intent intent = new Intent(MainActivity.this,PrimaryTabbedActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 }
