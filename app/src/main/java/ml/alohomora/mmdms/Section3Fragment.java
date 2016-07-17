@@ -1,5 +1,7 @@
 package ml.alohomora.mmdms;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -17,40 +19,16 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Section3Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Sectiofactory method to
- * create an instance of this fragment.
- */
+
 public class Section3Fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     EditText et;
-    private OnFragmentInteractionListener mListener;
-
+    SharedPreferences sharedPreferences=getActivity().getSharedPreferences("mmdmsPreferences", Context.MODE_PRIVATE);
+    int seid=sharedPreferences.getInt("currentEid",0);
     public Section3Fragment() {
         // Required empty public constructor
     }
-
-
-
-
-
-
-
-
-
-
-
 
     String bGroup,resp,gLevel,card;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +39,7 @@ public class Section3Fragment extends Fragment {
         et = (EditText) view.findViewById(R.id.Form3glucoseLevel);
         previoustext();
         insert();
-        SQLiteDatabase mydb = ((PrimaryTabbedActivity)(getActivity()).sqLiteDatabaseInActivity;
+        SQLiteDatabase mydb = ((PrimaryTabbedActivity)getActivity()).sqLiteDatabaseInActivity;
         Cursor resultSet = mydb.rawQuery("Select bloodGroup from sqLiteDatabaseInActivity where eid="+seid,null);
         resultSet.moveToFirst();
         bGroup = resultSet.getString(6);
@@ -127,7 +105,7 @@ public class Section3Fragment extends Fragment {
             RadioButton br = (RadioButton) getActivity().findViewById(R.id.cardProblemNo);
             RadioButton rb = (RadioButton) getActivity().findViewById(R.id.cardProblemYes);
             RadioButton rb1 = (RadioButton) getActivity().findViewById(R.id.respProblemYes);
-            RadioButton br1= (RadioButton) getActivity().findViewById(R.id.cardProblemNo);
+            RadioButton br1= (RadioButton) getActivity().findViewById(R.id.respProblemNo);
             if(rb1.isChecked())
             {
                 repiratoryProblem=rb1.getText().toString();
@@ -142,10 +120,11 @@ public class Section3Fragment extends Fragment {
                 cardiacProblem = rb.getText().toString();
             }
             else {
-                br.getText().toString();
+                cardiacProblem = br.getText().toString();
             }
-            SQLiteDatabase mydb = ((PrimaryTabbedActivity)(getActivity()).sqLiteDatabaseInActivity;
-            mydb.execSQL("update PatInfo set bloodGroup="+bloodGroup+",glucoseLevel="+glucoseLevel+",cardiacProblem="+cardiacProblem+",respiratoryProblem="+repiratoryProblem+"where eid="+seid";",null);
+            SQLiteDatabase mydb;
+            mydb = ((PrimaryTabbedActivity)getActivity()).sqLiteDatabaseInActivity;
+            mydb.execSQL("update PatInfo set bloodGroup="+bloodGroup+",glucoseLevel="+glucoseLevel+",cardiacProblem="+cardiacProblem+",respiratoryProblem="+repiratoryProblem+"where eid="+seid+";",null);
 
         }
 
@@ -237,7 +216,7 @@ public class Section3Fragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+
     }
 
     /**
@@ -250,8 +229,5 @@ public class Section3Fragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

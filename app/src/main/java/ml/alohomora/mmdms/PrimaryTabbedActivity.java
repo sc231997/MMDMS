@@ -101,9 +101,9 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
                     return new Section1Fragment();
                //case 1:
                    // return new Section2Fragment();
-                case 2:
+                case 1:
                     return new Section3Fragment();
-                case 3:
+                case 2:
                     return new Section4Fragment();
                 case 4:
                    // return new Section5Fragment();
@@ -165,5 +165,9 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+    public SQLiteDatabase getSqLiteDatabase()
+    {
+        return sqLiteDatabaseInActivity;
     }
 }
