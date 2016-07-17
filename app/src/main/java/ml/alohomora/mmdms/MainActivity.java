@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
     void initialise()
     {
         sqLiteDatabase = SQLiteDatabase.openDatabase("PatInfo",null,MODE_PRIVATE);
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS PatInfo (pid INT,eid INT, name VARCHAR(100),contactNumber VARCHAR(100),age INT,gender VARCHAR(10),bloodGroup VARCHAR(5),"+"" +
+                "glucoseLevel FLOAT,respiratoryProblem VARCHAR(2), cardiacProblem VARCHAR(2),bmi FLOAT,weight FLOAT,height FLOAT)");
         listView = (ListView)findViewById(R.id.listViewPrimary);
         editText = (EditText) findViewById(R.id.editTextSearch);
         imageButton = (ImageButton)findViewById(R.id.imageButtonSortedSearch);
@@ -147,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
                 contact.add(cursor.getString(3));
 
             }
+            CustomListAdapter customListAdapter = new CustomListAdapter(MainActivity.this,name,lastVisit,contact);
+            listView.setAdapter(customListAdapter);
 
         }
     }

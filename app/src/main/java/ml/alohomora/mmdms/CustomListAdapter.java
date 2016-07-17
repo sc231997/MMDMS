@@ -9,15 +9,17 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ankush on 7/16/2016.
  */
 public class CustomListAdapter extends BaseAdapter {
     Context context;
-    String[] name,lastVisit,contact;
+    ArrayAdapter<String> name,lastVisit,contact;
     private static LayoutInflater inflater=null;
 
-    public CustomListAdapter(MainActivity mainActivity, String[] name,String[] lastVisit,String[] contact)
+    public CustomListAdapter(MainActivity mainActivity, ArrayList<String> name, ArrayList<String> lastVisit, ArrayList<String> contact)
     {
         context = mainActivity;
         this.name = name;
@@ -27,7 +29,7 @@ public class CustomListAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return name.length;
+        return name.getCount();
     }
 
     @Override
@@ -47,9 +49,9 @@ public class CustomListAdapter extends BaseAdapter {
         textViewName = (TextView) listItem.findViewById(R.id.listTextViewName);
         textViewContact = (TextView)listItem.findViewById(R.id.listTextViewContact);
         textViewLastVisit = (TextView)listItem.findViewById(R.id.listTextViewLastVisit);
-        textViewName.setText(name[i]);
-        textViewLastVisit.setText(lastVisit[i]);
-        textViewContact.setText(contact[i]);
+        textViewName.setText(name.getItem(i));
+        textViewLastVisit.setText(lastVisit.getItem(i));
+        textViewContact.setText(contact.getItem(i));
         return listItem;
     }
 }
