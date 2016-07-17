@@ -100,11 +100,11 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
                     //return new Section1Fragment();
                // case 1:
                     //return new Section2Fragment();
-                case 0:
-                    return new Section3Fragment();
+               // case 2:
+                 //   return new Section3Fragment();
                 case 3:
-                   // return new Section4Fragment();
-                case 4:
+                   return new Section4Fragment();
+               /* case 4:
                    // return new Section5Fragment();
                 case 5:
                    // return new Section6Fragment();
@@ -119,9 +119,9 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
                 case 10:
                     //return new Section11Fragment();
                 case 11:
-                    //return new Section12Fragment();
+                    //return new Section12Fragment();*/
                 case 12:
-                   //return new Section13Fragment();
+                   return new Section13Fragment();
             }
             return null;
         }
