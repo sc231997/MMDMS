@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> eid,pid,visitNo;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    FloatingActionButton floatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
         });
         sharedPreferences = getSharedPreferences("mmdmsPreferences",MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        floatingActionButton = (FloatingActionButton)findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insertNewPatient();
+            }
+        });
     }
     void search(CharSequence querySeq,String searchType)
     {
@@ -274,6 +282,19 @@ public class MainActivity extends AppCompatActivity {
                 ", \"" + name + "\",\"" + contactNo +"\"," + age + ",\"" + gender + "\")");
         editor.putInt("currentEid",maxEid);
         editor.commit();
+        Intent intent = new Intent(MainActivity.this,PrimaryTabbedActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    void insertNewPatient()
+    {
+        int newPid = sharedPreferences.getInt("maxPid",1000);
+        editor.putInt("maxPid",newPid + 200);
+        editor.putInt("currentEid",newPid + 1);
+        editor.commit();
+        Intent intent = new Intent(MainActivity.this,PrimaryTabbedActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 }
