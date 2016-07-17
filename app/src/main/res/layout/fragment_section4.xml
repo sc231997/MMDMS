@@ -1,0 +1,61 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ml.alohomora.mmdms.Section4Fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="75dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Haemoglobin:"
+            android:id="@+id/form4field1"
+            android:layout_marginTop="71dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="125dp"
+            android:layout_height="75dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="WBC Count"
+            android:id="@+id/fom4field2"
+            android:layout_below="@+id/form4field1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editForm4field1"
+            android:layout_alignTop="@+id/form4field1"
+            android:layout_toRightOf="@+id/form4field1"
+            android:layout_toEndOf="@+id/form4field1" />
+
+        <EditText
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editForm4field2"
+            android:layout_below="@+id/form4field1"
+            android:layout_alignRight="@+id/editForm4field1"
+            android:layout_alignEnd="@+id/editForm4field1" />
+
+        <Button
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="Ok"
+            android:id="@+id/Formbutton1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/editForm4field2"
+            android:layout_alignEnd="@+id/editForm4field2" />
+
+    </RelativeLayout>
+</FrameLayout>
