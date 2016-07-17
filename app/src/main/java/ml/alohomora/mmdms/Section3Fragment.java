@@ -1,6 +1,7 @@
 package ml.alohomora.mmdms;
 
-import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 
 /**
@@ -50,16 +51,43 @@ public class Section3Fragment extends Fragment {
 
 
 
-    @Override
+
+    String bGroup,resp,gLevel,card;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_section3, container, false);
         spin(view);
-        et = (EditText) view.findViewById(R.id.BGhighlight);
+        et = (EditText) view.findViewById(R.id.Form3glucoseLevel);
+        previoustext();
+        insert();
+        SQLiteDatabase mydb = ((PrimaryTabbedActivity)(getActivity()).sqLiteDatabaseInActivity;
+        Cursor resultSet = mydb.rawQuery("Select bloodGroup from sqLiteDatabaseInActivity where eid="+seid,null);
+        resultSet.moveToFirst();
+        bGroup = resultSet.getString(6);
+
+        resultSet = mydb.rawQuery("Select glucoseLevel from sqLiteDatabaseInActivity where eid="+seid,null);
+        resultSet.moveToFirst();
+        gLevel = resultSet.getString(7);
+
+        resultSet = mydb.rawQuery("Select respiratoryProblem from sqLiteDatabaseInActivity where eid="+seid,null);
+        resultSet.moveToFirst();
+        resp = resultSet.getString(8);
+
+        resultSet = mydb.rawQuery("Select cardiacProblem from sqLiteDatabaseInActivity where eid="+seid,null);
+        resultSet.moveToFirst();
+        card = resultSet.getString(9);
+
+
+
+
+
+
+
         et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                previoustext();
 
             }
 
@@ -79,11 +107,106 @@ public class Section3Fragment extends Fragment {
 
         public void spin(View view) {
         Spinner dropdown = (Spinner) view.findViewById(R.id.spinner);
-        String[] bgroup = {"A+", "A-", "B+", "B-", "O", "AB+", "AB-"};
+        String[] bgroup = {"Select","A+", "A-", "B+", "B-", "O", "AB+", "AB-"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>((getActivity()), android.R.layout.simple_spinner_item, bgroup);
         dropdown.setAdapter(adapter);
 
+
     }
+
+
+
+        public void insert()
+        {
+            String bloodGroup,cardiacProblem,repiratoryProblem;
+            int glucoseLevel;
+            Spinner sp = (Spinner) getActivity().findViewById(R.id.spinner);
+            bloodGroup=sp.getSelectedItem().toString();
+            EditText et = (EditText) getActivity().findViewById(R.id.Form3glucoseLevel);
+            glucoseLevel = Integer.parseInt(et.getText().toString());
+            RadioButton br = (RadioButton) getActivity().findViewById(R.id.cardProblemNo);
+            RadioButton rb = (RadioButton) getActivity().findViewById(R.id.cardProblemYes);
+            RadioButton rb1 = (RadioButton) getActivity().findViewById(R.id.respProblemYes);
+            RadioButton br1= (RadioButton) getActivity().findViewById(R.id.cardProblemNo);
+            if(rb1.isChecked())
+            {
+                repiratoryProblem=rb1.getText().toString();
+            }
+            else
+            {
+                repiratoryProblem=br1.getText().toString();
+            }
+
+
+            if(rb.isChecked()) {
+                cardiacProblem = rb.getText().toString();
+            }
+            else {
+                br.getText().toString();
+            }
+            SQLiteDatabase mydb = ((PrimaryTabbedActivity)(getActivity()).sqLiteDatabaseInActivity;
+            mydb.execSQL("update PatInfo set bloodGroup="+bloodGroup+",glucoseLevel="+glucoseLevel+",cardiacProblem="+cardiacProblem+",respiratoryProblem="+repiratoryProblem+"where eid="+seid";",null);
+
+        }
+
+        public void previoustext()
+        {
+
+            String[] bgroup = {"Select","A+", "A-", "B+", "B-", "O", "AB+", "AB-"};
+
+            if(gLevel!=null)
+            {
+                 EditText et1 = (EditText) getActivity().findViewById(R.id.Form3glucoseLevel);
+                et1.setText(gLevel);
+            }
+
+            if(resp!=null)
+            {
+                if(resp=="Yes")
+                {
+                    RadioButton rb = (RadioButton) getActivity().findViewById(R.id.respProblemYes);
+                    rb.setEnabled(true);
+                }
+                else
+                {
+                    RadioButton rb = (RadioButton) getActivity().findViewById(R.id.respProblemNo);
+                    rb.setEnabled(true);
+                }
+
+            }
+
+            if(card!=null)
+            {
+                if(card=="Yes")
+                {
+                    RadioButton rb = (RadioButton) getActivity().findViewById(R.id.cardProblemYes);
+                    rb.setEnabled(true);
+                }
+
+                else
+                {
+                    RadioButton rb = (RadioButton) getActivity().findViewById(R.id.cardProblemNo);
+                    rb.setEnabled(true);
+                }
+            }
+
+            if(bGroup!=null)
+            {
+                for(int i=0;i<8;i++)
+                {
+                    if(bGroup==bgroup[i])
+                    {
+                        Spinner spin = (Spinner) getActivity().findViewById(R.id.spinner);
+                        spin.setSelection(i);
+                    }
+                }
+            }
+
+
+        }
+
+
+
 
         public void highlight()
          { String s;

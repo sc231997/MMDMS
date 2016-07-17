@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Yes"
-                android:id="@+id/radioButton"
+                android:id="@+id/cardProblemYes"
                 android:checked="false"
                 android:layout_toRightOf="@+id/Form3Field4"
                 android:layout_alignTop="@+id/Form3Field4"
@@ -33,10 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No"
-                android:id="@+id/radioButton2"
-                android:layout_below="@+id/radioButton"
-                android:layout_alignLeft="@+id/radioButton"
-                android:layout_alignStart="@+id/radioButton"
+                android:id="@+id/cardProblemNo"
+                android:layout_below="@+id/cardProblemYes"
+                android:layout_alignLeft="@+id/cardProblemYes"
+                android:layout_alignStart="@+id/cardProblemYes"
                 android:checked="false" />
         </RadioGroup>
 
@@ -98,7 +98,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/BGhighlight"
+            android:id="@+id/Form3glucoseLevel"
             android:layout_alignBottom="@+id/Form3Field2"
             android:layout_toRightOf="@+id/Form3Field2"
             android:layout_alignRight="@+id/spinner"
@@ -126,28 +126,28 @@
             android:layout_height="80dp"
             android:id="@+id/radioGroup"
             android:layout_alignTop="@+id/Form3Field3"
-            android:layout_alignLeft="@+id/BGhighlight"
-            android:layout_alignStart="@+id/BGhighlight">
+            android:layout_alignLeft="@+id/Form3glucoseLevel"
+            android:layout_alignStart="@+id/Form3glucoseLevel">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Yes"
-                android:id="@+id/radioButton3"
+                android:id="@+id/respProblemYes"
                 android:checked="false"
                 android:layout_alignTop="@+id/Form3Field3"
-                android:layout_alignLeft="@+id/radioButton2"
-                android:layout_alignStart="@+id/radioButton2" />
+                android:layout_alignLeft="@+id/cardProblemNo"
+                android:layout_alignStart="@+id/cardProblemNo" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No"
-                android:id="@+id/radioButton4"
+                android:id="@+id/respProblemNo"
                 android:checked="false"
-                android:layout_below="@+id/radioButton3"
-                android:layout_alignLeft="@+id/radioButton3"
-                android:layout_alignStart="@+id/radioButton3"
+                android:layout_below="@+id/respProblemYes"
+                android:layout_alignLeft="@+id/respProblemYes"
+                android:layout_alignStart="@+id/respProblemYes"
                 />
 
 
