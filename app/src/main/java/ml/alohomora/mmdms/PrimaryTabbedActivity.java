@@ -97,14 +97,14 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position)
             {
-               // case 0:
-                    //return new Section1Fragment();
-               // case 1:
-                    //return new Section2Fragment();
                 case 0:
+                    return new Section1Fragment();
+               //case 1:
+                   // return new Section2Fragment();
+                case 2:
                     return new Section3Fragment();
                 case 3:
-                   // return new Section4Fragment();
+                    return new Section4Fragment();
                 case 4:
                    // return new Section5Fragment();
                 case 5:
@@ -130,7 +130,7 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 1;
+            return 3;
         }
 
         @Override
