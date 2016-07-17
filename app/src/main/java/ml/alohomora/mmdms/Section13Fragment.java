@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -27,6 +28,7 @@ public class Section13Fragment extends Fragment {
 
     Button calcBalance;
     EditText et1,et2;
+    TextView tv1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -71,7 +73,28 @@ public class Section13Fragment extends Fragment {
     {
         // Inflate the layout for this fragment
 
-        calcBalance = (Button)getActivity().findViewById(R.id.)
+        calcBalance = (Button)getActivity().findViewById(R.id.form13balanceButton);
+        et1 = (EditText)getActivity().findViewById(R.id.form13Amount);
+        et2 = (EditText)getActivity().findViewById(R.id.form13paidAmount);
+
+        tv1 = (TextView)getActivity().findViewById(R.id.form13viewBalance);
+
+
+        String amts,paidAmts;
+        int amt,paidAmt,balance;
+
+        amts = et1.getText().toString();
+        amt = Integer.parseInt(amts);
+        paidAmts = et2.getText().toString();
+        paidAmt = Integer.parseInt(paidAmts);
+
+        balance = amt - paidAmt;
+
+        tv1.setText(balance);
+
+
+
+
 
         return inflater.inflate(R.layout.fragment_section13, container, false);
     }
