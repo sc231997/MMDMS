@@ -34,7 +34,7 @@ public class Section4Fragment extends Fragment {
     TextView tv1,tv2;
     int eid;
     SharedPreferences sp;
-    String currentEid = "currentEid";
+    String currentEid = "mmdmsPreferences";
     SQLiteDatabase sqLiteDatabaseInActivity;
 
     // TODO: Rename and change types of parameters
