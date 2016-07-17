@@ -51,8 +51,8 @@ public class Section1Fragment extends Fragment implements AdapterView.OnItemClic
     String nameVar,contactNumberVar,genderVar,dobVar;
     int day_dob,month_dob, year_dob,age;
     SQLiteDatabase myDB;
-    SharedPreferences sharedPreferences=getActivity().getSharedPreferences("mmdmsPreferences",Context.MODE_PRIVATE);
-    int eid=sharedPreferences.getInt("currentEid",0);
+    SharedPreferences sharedPreferences;
+    int eid;
     //private Integer[] integer = {1,2,3,4,5};
     //Spinner spinner;
 
@@ -79,7 +79,8 @@ public class Section1Fragment extends Fragment implements AdapterView.OnItemClic
 
             }
         });*/
-
+        sharedPreferences= this.getActivity().getSharedPreferences("mmdmsPreferences",Context.MODE_PRIVATE);
+        eid=sharedPreferences.getInt("currentEid",0);
         ageEditText=(EditText)view.findViewById(R.id.age);
         name=(EditText)view.findViewById(R.id.name);
         contactNumber=(EditText)view.findViewById(R.id.contactNumber);

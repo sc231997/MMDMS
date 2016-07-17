@@ -24,8 +24,8 @@ public class Section3Fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     EditText et;
-    SharedPreferences sharedPreferences=getActivity().getSharedPreferences("mmdmsPreferences", Context.MODE_PRIVATE);
-    int seid=sharedPreferences.getInt("currentEid",0);
+    SharedPreferences sharedPreferences;
+    int seid;
     public Section3Fragment() {
         // Required empty public constructor
     }
@@ -35,10 +35,12 @@ public class Section3Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_section3, container, false);
+        sharedPreferences=getActivity().getSharedPreferences("mmdmsPreferences", Context.MODE_PRIVATE);
+        seid=sharedPreferences.getInt("currentEid",0);
         spin(view);
         et = (EditText) view.findViewById(R.id.Form3glucoseLevel);
         previoustext();
-        insert();
+        insert(view);
         SQLiteDatabase mydb = ((PrimaryTabbedActivity)getActivity()).sqLiteDatabaseInActivity;
         Cursor resultSet = mydb.rawQuery("Select bloodGroup from sqLiteDatabaseInActivity where eid="+seid,null);
         resultSet.moveToFirst();
@@ -94,18 +96,18 @@ public class Section3Fragment extends Fragment {
 
 
 
-        public void insert()
+        public void insert(View view)
         {
             String bloodGroup,cardiacProblem,repiratoryProblem;
             int glucoseLevel;
-            Spinner sp = (Spinner) getActivity().findViewById(R.id.spinner);
-            bloodGroup=sp.getSelectedItem().toString();
-            EditText et = (EditText) getActivity().findViewById(R.id.Form3glucoseLevel);
+            Spinner sp = (Spinner) view.findViewById(R.id.spinner);
+            bloodGroup= sp.getSelectedItem().toString();
+            EditText et = (EditText) view.findViewById(R.id.Form3glucoseLevel);
             glucoseLevel = Integer.parseInt(et.getText().toString());
-            RadioButton br = (RadioButton) getActivity().findViewById(R.id.cardProblemNo);
-            RadioButton rb = (RadioButton) getActivity().findViewById(R.id.cardProblemYes);
-            RadioButton rb1 = (RadioButton) getActivity().findViewById(R.id.respProblemYes);
-            RadioButton br1= (RadioButton) getActivity().findViewById(R.id.respProblemNo);
+            RadioButton br = (RadioButton) view.findViewById(R.id.cardProblemNo);
+            RadioButton rb = (RadioButton) view.findViewById(R.id.cardProblemYes);
+            RadioButton rb1 = (RadioButton) view.findViewById(R.id.respProblemYes);
+            RadioButton br1= (RadioButton) view.findViewById(R.id.respProblemNo);
             if(rb1.isChecked())
             {
                 repiratoryProblem=rb1.getText().toString();

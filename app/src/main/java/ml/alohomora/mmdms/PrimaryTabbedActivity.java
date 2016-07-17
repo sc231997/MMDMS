@@ -47,7 +47,7 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        sqLiteDatabaseInActivity = SQLiteDatabase.openDatabase("PatInfo",null,MODE_PRIVATE);
+        sqLiteDatabaseInActivity = openOrCreateDatabase("PatInfo.db",MODE_PRIVATE,null);
 
     }
 
@@ -103,8 +103,8 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
                    // return new Section2Fragment();
                 case 1:
                     return new Section3Fragment();
-                case 2:
-                    return new Section4Fragment();
+                //case 2:
+                    //return new Section4Fragment();
                 case 4:
                    // return new Section5Fragment();
                 case 5:
@@ -130,7 +130,7 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override

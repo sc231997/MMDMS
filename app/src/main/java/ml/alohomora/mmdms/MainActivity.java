@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     void initialise()
     {
-        sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase("PatInfo",null);
+        sqLiteDatabase = openOrCreateDatabase("PatInfo.db",MODE_PRIVATE,null);
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS PatInfo (pid INT,eid INT, name VARCHAR(100),contactNumber VARCHAR(100),age INT,gender VARCHAR(10),bloodGroup VARCHAR(5),"+"" +
                 "glucoseLevel FLOAT,respiratoryProblem VARCHAR(2), cardiacProblem VARCHAR(2),bmi FLOAT,weight FLOAT,height FLOAT,haemoglobin FLOAT,wbc LONG,balance FLOAT, amount FLOAT)");
         listView = (ListView)findViewById(R.id.listViewPrimary);
