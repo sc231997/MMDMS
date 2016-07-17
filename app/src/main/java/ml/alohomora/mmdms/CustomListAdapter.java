@@ -16,20 +16,21 @@ import java.util.ArrayList;
  */
 public class CustomListAdapter extends BaseAdapter {
     Context context;
-    ArrayAdapter<String> name,lastVisit,contact;
+    ArrayList<String> name,contact;
+    ArrayList<Integer> visitNo;
     private static LayoutInflater inflater=null;
 
-    public CustomListAdapter(MainActivity mainActivity, ArrayList<String> name, ArrayList<String> lastVisit, ArrayList<String> contact)
+    public CustomListAdapter(MainActivity mainActivity, ArrayList<String> name, ArrayList<Integer> lastVisit, ArrayList<String> contact)
     {
         context = mainActivity;
         this.name = name;
-        this.lastVisit = lastVisit;
+        this.visitNo = lastVisit;
         this.contact = contact;
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount() {
-        return name.getCount();
+        return name.size();
     }
 
     @Override
@@ -45,13 +46,13 @@ public class CustomListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View listItem = inflater.inflate(R.layout.search_list_view_layout,null,true);
-        TextView textViewName,textViewContact,textViewLastVisit;
+        TextView textViewName,textViewContact,textViewVisitNo;
         textViewName = (TextView) listItem.findViewById(R.id.listTextViewName);
         textViewContact = (TextView)listItem.findViewById(R.id.listTextViewContact);
-        textViewLastVisit = (TextView)listItem.findViewById(R.id.listTextViewLastVisit);
-        textViewName.setText(name.getItem(i));
-        textViewLastVisit.setText(lastVisit.getItem(i));
-        textViewContact.setText(contact.getItem(i));
+        textViewVisitNo = (TextView)listItem.findViewById(R.id.listTextViewVisitNo);
+        textViewName.setText(name.get(i));
+        textViewVisitNo.setText(visitNo.get(i));
+        textViewContact.setText(contact.get(i));
         return listItem;
     }
 }
