@@ -37,10 +37,9 @@ import java.util.Calendar;
  * Use the  factory method to
  * create an instance of this fragment.
  */
-public class Section1Fragment extends Fragment implements AdapterView.OnItemClickListener {
+public class Section1Fragment extends Fragment {
 
 
-    private OnFragmentInteractionListener mListener;
 
     public Section1Fragment() {
         // Required empty public constructor
@@ -53,6 +52,7 @@ public class Section1Fragment extends Fragment implements AdapterView.OnItemClic
     SQLiteDatabase myDB;
     SharedPreferences sharedPreferences;
     int eid;
+    View view;
     //private Integer[] integer = {1,2,3,4,5};
     //Spinner spinner;
 
@@ -62,7 +62,7 @@ public class Section1Fragment extends Fragment implements AdapterView.OnItemClic
         // Inflate the layout for this fragment
 
 
-        View view =  inflater.inflate(R.layout.fragment_section1, container, false);
+        view =  inflater.inflate(R.layout.fragment_section1, container, false);
        /* spinner=(Spinner)view.findViewById(R.id.age);
         ArrayAdapter<Integer> adapter_age=new ArrayAdapter<Integer>(getActivity(),android.R.layout.simple_spinner_item,integer);
         adapter_age.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,10 +86,10 @@ public class Section1Fragment extends Fragment implements AdapterView.OnItemClic
         contactNumber=(EditText)view.findViewById(R.id.contactNumber);
         genderGroup = (RadioGroup)view.findViewById(R.id.gender);
         myDB = ((PrimaryTabbedActivity)getActivity()).sqLiteDatabaseInActivity;
-        setForm();
+        setForm(view);
         return view;
     }
-    public void setForm(){
+    public void setForm(View view){
         // TODO: Enter pid and eid
         Cursor cursor=myDB.rawQuery("SELECT name,gender,age,contactNumber FROM PatInfo WHERE eid="+eid+";",null);
         cursor.moveToFirst();
@@ -102,9 +102,9 @@ public class Section1Fragment extends Fragment implements AdapterView.OnItemClic
         name.setText(nameVar, TextView.BufferType.EDITABLE);
 
         if(genderVar=="Male")
-            (getActivity().findViewById(R.id.genderMale)).setEnabled(true);
+            (view.findViewById(R.id.genderMale)).setEnabled(true);
         else
-            (getActivity().findViewById(R.id.genderFemale)).setEnabled(true);
+            (view.findViewById(R.id.genderFemale)).setEnabled(true);
         ageEditText.setText(age);
         contactNumber.setText(contactNumberVar);
     }
@@ -113,24 +113,19 @@ public class Section1Fragment extends Fragment implements AdapterView.OnItemClic
         nameVar=name.getText().toString();
 
         int selectedId = genderGroup.getCheckedRadioButtonId();
-        genderButton = (RadioButton)getActivity().findViewById(selectedId);
+        genderButton = (RadioButton)view.findViewById(selectedId);
         genderVar=genderButton.getText().toString();
 
         age=Integer.parseInt(ageEditText.getText().toString());
 
         contactNumberVar=contactNumber.getText().toString();
 
-        // TODO: Enter pid and eid
+
         myDB.execSQL("UPDATE PatInfo SET name="+nameVar+",contactNumber=+"+contactNumberVar+",gender="+genderVar+",age="+age+
                 "WHERE eid="+eid+";");
     }
 /*
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 /*
     @Override
     public void onAttach(Context context) {
@@ -146,14 +141,10 @@ public class Section1Fragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
         save();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-    }
 
 
     /**
@@ -166,8 +157,5 @@ public class Section1Fragment extends Fragment implements AdapterView.OnItemClic
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

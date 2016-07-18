@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -24,50 +25,48 @@ public class Section3Fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     EditText et;
+    Button buttonSave;
     SharedPreferences sharedPreferences;
+    View view;
     int seid;
     public Section3Fragment() {
         // Required empty public constructor
     }
 
-    String bGroup,resp,gLevel,card;
+    String bGroup,resp,card;
+    Float gLevel;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_section3, container, false);
+        view =  inflater.inflate(R.layout.fragment_section3, container, false);
         sharedPreferences=getActivity().getSharedPreferences("mmdmsPreferences", Context.MODE_PRIVATE);
+        SQLiteDatabase mydb = ((PrimaryTabbedActivity)getActivity()).sqLiteDatabaseInActivity;
         seid=sharedPreferences.getInt("currentEid",0);
         spin(view);
         et = (EditText) view.findViewById(R.id.Form3glucoseLevel);
-        previoustext();
-        insert(view);
-        SQLiteDatabase mydb = ((PrimaryTabbedActivity)getActivity()).sqLiteDatabaseInActivity;
-        Cursor resultSet = mydb.rawQuery("Select bloodGroup from sqLiteDatabaseInActivity where eid="+seid,null);
+        previoustext(view);
+        buttonSave = (Button)view.findViewById(R.id.buttonSaveSection3);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View btnView) {
+                insert(view);
+            }
+        });
+        Cursor resultSet = mydb.rawQuery("Select * from PatInfo where eid="+seid,null);
         resultSet.moveToFirst();
-        bGroup = resultSet.getString(6);
+        if (resultSet.getCount() > 0) {
+            bGroup = resultSet.getString(6);
 
-        resultSet = mydb.rawQuery("Select glucoseLevel from sqLiteDatabaseInActivity where eid="+seid,null);
-        resultSet.moveToFirst();
-        gLevel = resultSet.getString(7);
+            gLevel = resultSet.getFloat(7);
 
-        resultSet = mydb.rawQuery("Select respiratoryProblem from sqLiteDatabaseInActivity where eid="+seid,null);
-        resultSet.moveToFirst();
-        resp = resultSet.getString(8);
+            resp = resultSet.getString(8);
 
-        resultSet = mydb.rawQuery("Select cardiacProblem from sqLiteDatabaseInActivity where eid="+seid,null);
-        resultSet.moveToFirst();
-        card = resultSet.getString(9);
-
-
-
-
-
-
-
+            card = resultSet.getString(9);
+        }
         et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                previoustext();
+                previoustext(view);
 
             }
 
@@ -99,11 +98,12 @@ public class Section3Fragment extends Fragment {
         public void insert(View view)
         {
             String bloodGroup,cardiacProblem,repiratoryProblem;
-            int glucoseLevel;
+            int glucoseLevel = 0;
             Spinner sp = (Spinner) view.findViewById(R.id.spinner);
             bloodGroup= sp.getSelectedItem().toString();
             EditText et = (EditText) view.findViewById(R.id.Form3glucoseLevel);
-            glucoseLevel = Integer.parseInt(et.getText().toString());
+            if(!et.getText().toString().equals(""))
+                glucoseLevel = Integer.parseInt(et.getText().toString());
             RadioButton br = (RadioButton) view.findViewById(R.id.cardProblemNo);
             RadioButton rb = (RadioButton) view.findViewById(R.id.cardProblemYes);
             RadioButton rb1 = (RadioButton) view.findViewById(R.id.respProblemYes);
@@ -126,31 +126,31 @@ public class Section3Fragment extends Fragment {
             }
             SQLiteDatabase mydb;
             mydb = ((PrimaryTabbedActivity)getActivity()).sqLiteDatabaseInActivity;
-            mydb.execSQL("update PatInfo set bloodGroup="+bloodGroup+",glucoseLevel="+glucoseLevel+",cardiacProblem="+cardiacProblem+",respiratoryProblem="+repiratoryProblem+"where eid="+seid+";",null);
+            mydb.execSQL("update PatInfo set bloodGroup=\""+bloodGroup+"\",glucoseLevel="+glucoseLevel+",cardiacProblem=\""+cardiacProblem+"\",respiratoryProblem=\""+repiratoryProblem+"\" where eid="+seid+";");
 
         }
 
-        public void previoustext()
+        public void previoustext(View view)
         {
 
             String[] bgroup = {"Select","A+", "A-", "B+", "B-", "O", "AB+", "AB-"};
 
             if(gLevel!=null)
             {
-                 EditText et1 = (EditText) getActivity().findViewById(R.id.Form3glucoseLevel);
-                et1.setText(gLevel);
+                 EditText et1 = (EditText) view.findViewById(R.id.Form3glucoseLevel);
+                et1.setText(gLevel.toString());
             }
 
             if(resp!=null)
             {
                 if(resp=="Yes")
                 {
-                    RadioButton rb = (RadioButton) getActivity().findViewById(R.id.respProblemYes);
+                    RadioButton rb = (RadioButton) view.findViewById(R.id.respProblemYes);
                     rb.setEnabled(true);
                 }
                 else
                 {
-                    RadioButton rb = (RadioButton) getActivity().findViewById(R.id.respProblemNo);
+                    RadioButton rb = (RadioButton) view.findViewById(R.id.respProblemNo);
                     rb.setEnabled(true);
                 }
 
@@ -160,13 +160,13 @@ public class Section3Fragment extends Fragment {
             {
                 if(card=="Yes")
                 {
-                    RadioButton rb = (RadioButton) getActivity().findViewById(R.id.cardProblemYes);
+                    RadioButton rb = (RadioButton) view.findViewById(R.id.cardProblemYes);
                     rb.setEnabled(true);
                 }
 
                 else
                 {
-                    RadioButton rb = (RadioButton) getActivity().findViewById(R.id.cardProblemNo);
+                    RadioButton rb = (RadioButton) view.findViewById(R.id.cardProblemNo);
                     rb.setEnabled(true);
                 }
             }
@@ -177,7 +177,7 @@ public class Section3Fragment extends Fragment {
                 {
                     if(bGroup==bgroup[i])
                     {
-                        Spinner spin = (Spinner) getActivity().findViewById(R.id.spinner);
+                        Spinner spin = (Spinner) view.findViewById(R.id.spinner);
                         spin.setSelection(i);
                     }
                 }
