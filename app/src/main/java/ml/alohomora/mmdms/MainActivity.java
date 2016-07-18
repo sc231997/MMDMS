@@ -216,7 +216,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        findViewById(R.id.buttonSortOk).setOnClickListener(new View.OnClickListener() {
+        Button buttonOkSort = (Button) dialog.findViewById(R.id.buttonSortOk);
+        buttonOkSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();

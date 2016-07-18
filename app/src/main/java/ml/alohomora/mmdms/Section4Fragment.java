@@ -52,7 +52,7 @@ public class Section4Fragment extends Fragment {
         b1 = (Button)view.findViewById(R.id.Form4button1);
         et1 = (EditText) view.findViewById(R.id.editForm4field1);
         et2 = (EditText) view.findViewById(R.id.editForm4field2);
-
+        b2 = (Button)view.findViewById(R.id.form4Button2);
         tv1 = (TextView)view.findViewById(R.id.form4dispHB);
         tv2 = (TextView)view.findViewById(R.id.form4dispWBC);
 

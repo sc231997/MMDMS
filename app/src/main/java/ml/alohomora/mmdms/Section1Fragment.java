@@ -30,9 +30,7 @@ import java.util.Calendar;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Section1Fragment.OnFragmentInteractionListener} interface
+
  * to handle interaction events.
  * Use the  factory method to
  * create an instance of this fragment.
@@ -48,7 +46,7 @@ public class Section1Fragment extends Fragment {
     RadioGroup genderGroup;
     RadioButton genderButton;
     String nameVar,contactNumberVar,genderVar,dobVar;
-    int day_dob,month_dob, year_dob,age;
+    int day_dob,month_dob, year_dob,age = 0;
     SQLiteDatabase myDB;
     SharedPreferences sharedPreferences;
     int eid;
@@ -105,7 +103,7 @@ public class Section1Fragment extends Fragment {
             (view.findViewById(R.id.genderMale)).setEnabled(true);
         else
             (view.findViewById(R.id.genderFemale)).setEnabled(true);
-        ageEditText.setText(age);
+        ageEditText.setText(Integer.toString(age));
         contactNumber.setText(contactNumberVar);
     }
     public void save(){

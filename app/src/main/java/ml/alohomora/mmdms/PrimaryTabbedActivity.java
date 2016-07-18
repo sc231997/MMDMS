@@ -103,10 +103,10 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
                    // return new Section2Fragment();
                 case 1:
                     return new Section3Fragment();
-                //case 2:
-                    //return new Section4Fragment();
+                case 2:
+                    return new Section4Fragment();
                 case 4:
-                   // return new Section5Fragment();
+                    return new Section13Fragment();
                 case 5:
                    // return new Section6Fragment();
                 case 6:
@@ -130,7 +130,7 @@ public class PrimaryTabbedActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
