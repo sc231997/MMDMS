@@ -172,6 +172,8 @@ public class MainActivity extends AppCompatActivity {
                 name.add(cursor.getString(2));
                 contact.add(cursor.getString(3));
                 visitNo.add(cursor.getInt(1) % cursor.getInt(0));
+                Toast.makeText(MainActivity.this,"Name : " + cursor.getString(2),Toast.LENGTH_SHORT).show();
+                cursor.moveToNext();
 
             }
             CustomListAdapter customListAdapter = new CustomListAdapter(MainActivity.this,name,visitNo,contact);

@@ -51,6 +51,7 @@ public class Section1Fragment extends Fragment {
     SharedPreferences sharedPreferences;
     int eid;
     View view;
+    Button buttonSave;
     //private Integer[] integer = {1,2,3,4,5};
     //Spinner spinner;
 
@@ -80,11 +81,19 @@ public class Section1Fragment extends Fragment {
         sharedPreferences= this.getActivity().getSharedPreferences("mmdmsPreferences",Context.MODE_PRIVATE);
         eid=sharedPreferences.getInt("currentEid",0);
         ageEditText=(EditText)view.findViewById(R.id.age);
+        buttonSave = (Button)view.findViewById(R.id.buttonSaveSection1);
         name=(EditText)view.findViewById(R.id.name);
         contactNumber=(EditText)view.findViewById(R.id.contactNumber);
         genderGroup = (RadioGroup)view.findViewById(R.id.gender);
         myDB = ((PrimaryTabbedActivity)getActivity()).sqLiteDatabaseInActivity;
         setForm(view);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                save();
+                Toast.makeText(getActivity(),"Changes saved",Toast.LENGTH_SHORT);
+            }
+        });
         return view;
     }
     public void setForm(View view){
@@ -119,8 +128,8 @@ public class Section1Fragment extends Fragment {
         contactNumberVar=contactNumber.getText().toString();
 
 
-        myDB.execSQL("UPDATE PatInfo SET name="+nameVar+",contactNumber=+"+contactNumberVar+",gender="+genderVar+",age="+age+
-                "WHERE eid="+eid+";");
+        myDB.execSQL("INSERT PatInfo SET name=\""+nameVar+"\",contactNumber=\""+contactNumberVar+"\",gender=\""+genderVar+"\",age="+age+
+                " WHERE eid="+eid+";");
     }
 /*
 
