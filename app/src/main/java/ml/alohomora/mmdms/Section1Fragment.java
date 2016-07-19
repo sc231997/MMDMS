@@ -91,7 +91,7 @@ public class Section1Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 save();
-                Toast.makeText(getActivity(),"Changes saved",Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(),"Changes saved",Toast.LENGTH_SHORT).show();
             }
         });
         return view;
@@ -128,7 +128,7 @@ public class Section1Fragment extends Fragment {
         contactNumberVar=contactNumber.getText().toString();
 
 
-        myDB.execSQL("INSERT PatInfo SET name=\""+nameVar+"\",contactNumber=\""+contactNumberVar+"\",gender=\""+genderVar+"\",age="+age+
+        myDB.execSQL("UPDATE PatInfo SET name=\""+nameVar+"\",contactNumber=\""+contactNumberVar+"\",gender=\""+genderVar+"\",age="+age+
                 " WHERE eid="+eid+";");
     }
 /*

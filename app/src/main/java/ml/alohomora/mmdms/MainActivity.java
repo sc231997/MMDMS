@@ -125,6 +125,13 @@ public class MainActivity extends AppCompatActivity {
                 insertNewPatient();
             }
         });
+        eid = new ArrayList<Integer>();
+        pid = new ArrayList<Integer>();
+        visitNo = new ArrayList<Integer>();
+        name = new ArrayList<String>();
+        contact = new ArrayList<String>();
+        lastVisit = new ArrayList<String>();
+
     }
     void search(CharSequence querySeq,String searchType)
     {
@@ -230,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
     {
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.dialog_show_result);
+        dialog.show();
         Button buttonNewEvent,buttonOk;
         TextView textViewName,textViewFullResult;
         buttonNewEvent = (Button)dialog.findViewById(R.id.buttonNewEvent);
@@ -246,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         cursor = sqLiteDatabase.rawQuery("SELECT * from PatInfo WHERE pid = " + pid.get(position),null);
         cursor.moveToFirst();
-        textViewName.setText(cursor.getString(2));
+        textViewName.append(cursor.getString(2));
         while (cursor.isAfterLast() == false)
         {
             textViewFullResult.append("Visit no : " + cursor.getInt(1) % cursor.getInt(0) + "\n");
@@ -257,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
             textViewFullResult.append("Weight : " + cursor.getFloat(11) + "\n");
             textViewFullResult.append("Haemoglobin : " + cursor.getFloat(13) + "\n");
             textViewFullResult.append("WBC Count : " + cursor.getLong(14) + "\n");
+            cursor.moveToNext();
         }
         buttonNewEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -295,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("maxPid",newPid + 200);
         editor.putInt("currentEid",newPid + 1);
         editor.commit();
+        sqLiteDatabase.execSQL("INSERT INTO PatInfo (pid,eid) VALUES (" + (newPid) + ", " + (newPid + 1) +")");
         Intent intent = new Intent(MainActivity.this,PrimaryTabbedActivity.class);
         startActivity(intent);
         finish();

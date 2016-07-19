@@ -50,9 +50,9 @@ public class CustomListAdapter extends BaseAdapter {
         textViewName = (TextView) listItem.findViewById(R.id.listTextViewName);
         textViewContact = (TextView)listItem.findViewById(R.id.listTextViewContact);
         textViewVisitNo = (TextView)listItem.findViewById(R.id.listTextViewVisitNo);
-        textViewName.setText(name.get(i));
-        textViewVisitNo.setText(visitNo.get(i));
-        textViewContact.setText(contact.get(i));
+        textViewName.append(name.get(i));
+        textViewVisitNo.append(Integer.toString(visitNo.get(i)));
+        textViewContact.append(contact.get(i));
         return listItem;
     }
 }
